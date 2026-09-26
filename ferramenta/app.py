@@ -10,7 +10,6 @@ OUTPUT_FOLDER = 'outputs'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-# Página HTML simples e direta para celular (Mobile First)
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -20,7 +19,7 @@ HTML_TEMPLATE = '''
     <title>Babi Dias | Anti-Rastro Video Tool</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #121212; color: #fff; text-align: center; padding: 20px; margin: 0; }
-        .card { background: #1e1e1e; padding: 25px; border-radius: 15px; max-width: 400px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .card { background: #1e1e1e; padding: 25px; border-radius: 15px; max-width: 400px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-top: 40px; }
         h2 { color: #ff4757; margin-bottom: 10px; }
         p { color: #a4b0be; font-size: 14px; }
         input[type="file"] { display: none; }
@@ -33,7 +32,7 @@ HTML_TEMPLATE = '''
 <body>
     <div class="card">
         <h2>Babi Dias - Anti-Rastro 🍑</h2>
-        <p>Limpe metadados, mude o hash e aplique mutação invisível direto pelo celular.</p>
+        <p>Limpe metadados, mude o hash e aplique mutação direto pelo celular.</p>
         
         <form action="/processar" method="POST" enctype="multipart/form-data" onsubmit="mostrarLoading()">
             <label class="file-upload">
@@ -80,7 +79,6 @@ def processar():
     
     file.save(input_path)
     
-    # Parâmetros de mutação aleatória invisível
     zoom_fator = round(random.uniform(1.01, 1.03), 3)
     audio_pitch = round(random.uniform(0.98, 1.02), 3)
     
@@ -96,7 +94,6 @@ def processar():
     
     try:
         subprocess.run(comando, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT)
-        # Limpa o arquivo original para não encher o servidor
         os.remove(input_path)
         return send_file(output_path, as_attachment=True)
     except Exception as e:
